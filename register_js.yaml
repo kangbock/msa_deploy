@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: register_js
+spec:
+#  replicas: 1
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      app: nodejs
+  template:
+    metadata:
+      labels: # labels to select/identify the deployment
+        app: nodejs
+    spec:     # pod spec
+      containers:
+      - name: nodejs
+        image: harbor.k-tech.cloud/kaniko/register_js:14
+        ports:
+        - containerPort: 3000
+      imagePullSecrets:
+      - name: docker-config-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: register_js-service
+spec:
+  selector:
+    app: nodejs
+  ports:
+    - port: 3000
+      targetPort: 3000
+  type: ClusterIP
