@@ -37,6 +37,8 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: main-ingress
+  annotations:
+    kubernetes.io/ingress.class: istio
 spec:
   tls:
   - hosts:
