@@ -42,7 +42,7 @@ spec:
   - hosts:
       - www.k-tech.cloud
     secretName: nginx-secret
-  ingressClassName: nginx
+  ingressClassName: istio
   rules:
   - host: www.k-tech.cloud
     http:
