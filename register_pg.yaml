@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: register-pg
-        image: harbor.k-tech.cloud/msa/register_pg:14
+        image: harbor.k-tech.cloud/msa/register_pg:2
         ports:
         - containerPort: 80
       imagePullSecrets:
