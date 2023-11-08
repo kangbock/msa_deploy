@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: login-pg
-        image: harbor.k-tech.cloud/msa/login_pg:2
+        image: harbor.k-tech.cloud/msa/login_pg:3
         ports:
         - containerPort: 80
       imagePullSecrets:
