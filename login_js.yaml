@@ -7,11 +7,11 @@ spec:
   revisionHistoryLimit: 0
   selector:
     matchLabels:
-      app: nodejs
+      app: login-js
   template:
     metadata:
       labels: # labels to select/identify the deployment
-        app: nodejs
+        app: login-js
     spec:     # pod spec
       containers:
       - name: login-js
@@ -27,7 +27,7 @@ metadata:
   name: login-js-service
 spec:
   selector:
-    app: nodejs
+    app: login-js
   ports:
     - port: 3000
       targetPort: 3000

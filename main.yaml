@@ -7,11 +7,11 @@ spec:
   revisionHistoryLimit: 0
   selector:
     matchLabels:
-      app: nginx
+      app: main
   template:
     metadata:
       labels:
-        app: nginx
+        app: main
     spec:
       containers:
       - name: main
@@ -27,7 +27,7 @@ metadata:
   name: main-service
 spec:
   selector:
-    app: nginx
+    app: main
   ports:
     - port: 80
       targetPort: 80

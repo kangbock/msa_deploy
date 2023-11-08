@@ -7,11 +7,11 @@ spec:
   revisionHistoryLimit: 0
   selector:
     matchLabels:
-      app: nodejs
+      app: register-js
   template:
     metadata:
       labels: # labels to select/identify the deployment
-        app: nodejs
+        app: register-js
     spec:     # pod spec
       containers:
       - name: register-js
@@ -27,7 +27,7 @@ metadata:
   name: register-js-service
 spec:
   selector:
-    app: nodejs
+    app: register-js
   ports:
     - port: 3000
       targetPort: 3000

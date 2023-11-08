@@ -7,11 +7,11 @@ spec:
   revisionHistoryLimit: 0
   selector:
     matchLabels:
-      app: nginx
+      app: login-pg
   template:
     metadata:
       labels:
-        app: nginx
+        app: login-pg
     spec:
       containers:
       - name: login-pg
@@ -27,7 +27,7 @@ metadata:
   name: login-pg-service
 spec:
   selector:
-    app: nginx
+    app: login-pg
   ports:
     - port: 80
       targetPort: 80

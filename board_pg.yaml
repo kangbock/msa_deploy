@@ -7,11 +7,11 @@ spec:
   revisionHistoryLimit: 0
   selector:
     matchLabels:
-      app: nginx
+      app: board-pg
   template:
     metadata:
       labels:
-        app: nginx
+        app: board-pg
     spec:
       containers:
       - name: board-pg
@@ -27,7 +27,7 @@ metadata:
   name: board-pg-service
 spec:
   selector:
-    app: nginx
+    app: board-pg
   ports:
     - port: 80
       targetPort: 80

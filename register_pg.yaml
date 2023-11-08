@@ -7,11 +7,11 @@ spec:
   revisionHistoryLimit: 0
   selector:
     matchLabels:
-      app: nginx
+      app: register-pg
   template:
     metadata:
       labels:
-        app: nginx
+        app: register-pg
     spec:
       containers:
       - name: register-pg
@@ -27,7 +27,7 @@ metadata:
   name: register-pg-service
 spec:
   selector:
-    app: nginx
+    app: register-pg
   ports:
     - port: 80
       targetPort: 80
