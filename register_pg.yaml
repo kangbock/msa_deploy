@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: register_pg
+  name: register-pg
 spec:
 #  replicas: 1
   revisionHistoryLimit: 0
@@ -14,7 +14,7 @@ spec:
         app: nginx
     spec:
       containers:
-      - name: register_pg
+      - name: register-pg
         image: harbor.k-tech.cloud/msa/register_pg:14
         ports:
         - containerPort: 80
@@ -24,7 +24,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: register_pg-service
+  name: register-pg-service
 spec:
   selector:
     app: nginx

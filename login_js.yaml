@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: login_js
+  name: login-js
 spec:
 #  replicas: 1
   revisionHistoryLimit: 0
@@ -14,7 +14,7 @@ spec:
         app: nodejs
     spec:     # pod spec
       containers:
-      - name: login_js
+      - name: login-js
         image: harbor.k-tech.cloud/kaniko/login_js:14
         ports:
         - containerPort: 3000
@@ -24,7 +24,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: login_js-service
+  name: login-js-service
 spec:
   selector:
     app: nodejs
