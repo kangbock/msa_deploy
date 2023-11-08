@@ -33,26 +33,47 @@ spec:
       targetPort: 80
   type: ClusterIP
 ---
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
 metadata:
-  name: main-ingress
+  name: main-gateway
   annotations:
     kubernetes.io/ingress.class: istio
 spec:
-  tls:
-  - hosts:
-      - www.k-tech.cloud
-    secretName: nginx-secret
-  ingressClassName: istio
-  rules:
-  - host: www.k-tech.cloud
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: main-service
-            port:
-              number: 80
+  selector:
+    istio: ingressgateway
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - www.k-tech.cloud
+  - port:
+      number: 443
+      name: https
+      protocol: HTTP
+    hosts:
+    - www.k-tech.cloud
+    tls:
+      mode: SIMPLE
+      credentialName: nginx-secret
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: main-virtualservice
+spec:
+  gateways:
+  - main-gateway
+  hosts:
+  - www.k-tech.cloud
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: main-service
+        port:
+          number: 80
