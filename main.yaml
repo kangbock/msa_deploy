@@ -42,13 +42,13 @@ spec:
     istio: ingressgateway
   servers:
   - port:
-      number: 8080
+      number: 80
       name: http
       protocol: HTTP
     hosts:
     - www.k-tech.cloud
   - port:
-      number: 8443
+      number: 443
       name: https
       protocol: HTTPS
     hosts:
