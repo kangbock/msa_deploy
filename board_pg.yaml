@@ -14,7 +14,7 @@ spec:
         app: nginx
     spec:
       containers:
-      - name: nginx
+      - name: board_pg
         image: harbor.k-tech.cloud/msa/board_pg:14
         ports:
         - containerPort: 80

@@ -14,7 +14,7 @@ spec:
         app: nodejs
     spec:     # pod spec
       containers:
-      - name: nodejs
+      - name: login_js
         image: harbor.k-tech.cloud/kaniko/login_js:14
         ports:
         - containerPort: 3000
