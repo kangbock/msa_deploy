@@ -37,6 +37,8 @@ apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
   name: main-gateway
+  annotations:
+    kubernetes.io/ingress.class: istio
 spec:
   selector:
     istio: ingressgateway
@@ -56,6 +58,7 @@ spec:
     tls:
       mode: SIMPLE
       credentialName: nginx-secret
+    ingressClassName: istio
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
