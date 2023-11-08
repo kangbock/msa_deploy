@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: board_pg
-        image: harbor.k-tech.cloud/msa/board_pg:14
+        image: harbor.k-tech.cloud/msa/board_pg:9
         ports:
         - containerPort: 80
       imagePullSecrets:
