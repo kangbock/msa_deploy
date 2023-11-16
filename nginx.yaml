@@ -31,10 +31,8 @@ spec:
   selector:
     app: nginx
   ports:
-    - name: nginx
-      port: 80
-      targetPort: 80
-  type: ClusterIP
+    - port: 80
+      name: nginx
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
