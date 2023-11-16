@@ -32,4 +32,4 @@ spec:
     app: login-js
   ports:
     - port: 3000
-      name: login-js
+      name: tcp-loginjs
