@@ -31,6 +31,7 @@ spec:
   selector:
     app: register-js
   ports:
-    - port: 3000
+    - name: register-js
+      port: 3000
       targetPort: 3000
   type: ClusterIP
