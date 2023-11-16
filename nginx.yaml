@@ -32,7 +32,7 @@ spec:
     app: nginx
   ports:
     - port: 80
-      name: nginx
+      name: nginx-http
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
