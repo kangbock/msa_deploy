@@ -31,6 +31,7 @@ spec:
   selector:
     app: login-js
   ports:
-    - port: 3000
+    - name: login-js
+      port: 3000
       targetPort: 3000
   type: ClusterIP
