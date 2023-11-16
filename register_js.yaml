@@ -33,5 +33,3 @@ spec:
   ports:
     - port: 3000
       name: register-js
-      targetPort: 3000
-  type: ClusterIP
