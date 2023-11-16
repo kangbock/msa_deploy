@@ -32,4 +32,4 @@ spec:
     app: register-js
   ports:
     - port: 3000
-      name: register-js
+      name: tcp-registerjs
