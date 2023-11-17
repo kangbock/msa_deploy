@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: harbor.k-tech.cloud/msa/nginx:7
+        image: harbor.k-tech.cloud/msa/nginx:1
         ports:
         - containerPort: 80
       imagePullSecrets:
