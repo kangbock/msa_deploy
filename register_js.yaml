@@ -17,7 +17,7 @@ spec:
     spec:     # pod spec
       containers:
       - name: register-js
-        image: harbor.k-tech.cloud/msa/register_js:2
+        image: harbor.k-tech.cloud/msa/register_js:1
         ports:
         - containerPort: 3000
       imagePullSecrets:
