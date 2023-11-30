@@ -30,6 +30,7 @@ metadata:
 spec:
   selector:
     app: register-js
+    sidecar.istio.io/inject: "true"
   ports:
     - port: 3000
       name: tcp-registerjs
