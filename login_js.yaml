@@ -11,9 +11,9 @@ spec:
   template:
     metadata:
       annotations:
-        sidecar.istio.io/inject: "true"
       labels: # labels to select/identify the deployment
         app: login-js
+        sidecar.istio.io/inject: "true"
     spec:     # pod spec
       containers:
       - name: login-js
