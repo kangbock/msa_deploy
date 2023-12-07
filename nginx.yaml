@@ -15,9 +15,6 @@ spec:
         app: nginx
         sidecar.istio.io/inject: "true"
     spec:
-      istio_labels:
-        app_label_name: "app"
-        version_label_name: "version"
       containers:
       - name: nginx
         image: harbor.k-tech.cloud/msa/nginx:1
