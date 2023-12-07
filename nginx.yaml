@@ -14,8 +14,10 @@ spec:
       labels:
         app: nginx
         sidecar.istio.io/inject: "true"
-        app.kubernetes.io/version: v1.76.0
     spec:
+      istio_labels:
+        app_label_name: "app"
+        version_label_name: "version"
       containers:
       - name: nginx
         image: harbor.k-tech.cloud/msa/nginx:1
