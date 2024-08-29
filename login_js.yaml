@@ -2,8 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: login-js
-  annotations:
-    prometheus.io/scrape: 'true'
 spec:
 #  replicas: 1
   revisionHistoryLimit: 0
@@ -13,6 +11,7 @@ spec:
   template:
     metadata:
       annotations:
+        prometheus.io/scrape: 'true'
       labels: # labels to select/identify the deployment
         app: login-js
         sidecar.istio.io/inject: "true"
