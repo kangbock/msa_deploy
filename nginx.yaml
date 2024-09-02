@@ -54,12 +54,6 @@ spec:
     tls:
       mode: SIMPLE
       credentialName: nginx-secret
-  - port:
-      number: 80
-      name: http
-      protocol: HTTP
-    hosts:
-    - www.k-tech.cloud
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
@@ -74,6 +68,9 @@ spec:
   - match:
     - uri:
         prefix: /
+    - port: 443
+      sniHosts:
+      - www.k-tech.cloud
     route:
     - destination:
         host: nginx-service
