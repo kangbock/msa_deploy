@@ -41,8 +41,6 @@ apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
   name: nginx-gateway
-  annotations:
-    kubernetes.io/ingress.class: istio
 spec:
   selector:
     istio: ingressgateway
