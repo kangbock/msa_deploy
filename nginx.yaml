@@ -64,7 +64,7 @@ spec:
   - nginx-gateway
   hosts:
   - www.k-tech.cloud
-  http:
+  tls:
   - match:
     - port: 443
       sniHosts:
