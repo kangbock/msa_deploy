@@ -46,6 +46,14 @@ spec:
     istio: ingressgateway
   servers:
   - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - www.k-tech.cloud
+    tls:
+      httpsRedirect: true
+  - port:
       number: 443
       name: https
       protocol: HTTPS
@@ -64,11 +72,10 @@ spec:
   - nginx-gateway
   hosts:
   - www.k-tech.cloud
-  tls:
+  http:
   - match:
-    - port: 443
-      sniHosts:
-      - www.k-tech.cloud
+    - uri:
+        prefix: /
     route:
     - destination:
         host: nginx-service
