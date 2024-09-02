@@ -51,8 +51,6 @@ spec:
       protocol: HTTP
     hosts:
     - www.k-tech.cloud
-    tls:
-      httpsRedirect: true
   - port:
       number: 443
       name: https
@@ -60,7 +58,7 @@ spec:
     hosts:
     - www.k-tech.cloud
     tls:
-      mode: SIMPLE
+      mode: MUTUAL
       credentialName: nginx-secret
 ---
 apiVersion: networking.istio.io/v1alpha3
