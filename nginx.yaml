@@ -66,8 +66,6 @@ spec:
   - www.k-tech.cloud
   http:
   - match:
-    - uri:
-        prefix: /
     - port: 443
       sniHosts:
       - www.k-tech.cloud
