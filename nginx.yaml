@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: nginx
   annotations:
-    prometheus.io/scrape: "true"
+    prometheus.io/scrape: "true"
 spec:
 #  replicas: 1
   revisionHistoryLimit: 0
@@ -30,7 +30,7 @@ kind: Service
 metadata:
   name: nginx-service
   annotations:
-    prometheus.io/scrape: "true"
+    prometheus.io/scrape: "true"
 spec:
   selector:
     app: nginx
