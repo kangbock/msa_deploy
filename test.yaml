@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: external-workload
+  namespace: dev
+  labels:
+    part-of: dev-object
+    name: nginx-application
+    component: dev-application
+    instance: external-workload
+    managed-by: kubectl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      instance: external-workload
+  template:
+    metadata:
+      labels:
+        part-of: dev-object
+        name: nginx-application
+        component: dev-application
+        instance: external-workload
+        managed-by: kubectl
+    spec:
+      containers:
+      - name: external-workload
+        image: nginx:latest
+        imagePullPolicy: IfNotPresent
+        command: ["/bin/bash"]
+        args: 
+          - |
+            "-c"
+            "echo \"You are connected through an External Ingress Controller! \n Hello from $(hostname)!\"
+            > /usr/share/nginx/html/index.html && nginx -g 'daemon off;'"
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+          - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-application
+  namespace: dev
+  labels:
+    part-of: dev-object
+    name: nginx-application
+    component: dev-application
+    instance: external-workload
+    managed-by: kubectl
+spec:
+  type: LoadBalancer
+  selector:
+    instance: external-workload
+  ports:
+  - port: 80
+    targetPort: 80
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: hpa-external-workload
+  namespace: dev
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: external-workload
+  minReplicas: 1
+  maxReplicas: 3
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageValue: 50
