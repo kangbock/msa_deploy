@@ -22,6 +22,13 @@ spec:
         image: harbor.k-tech.cloud/msa/nginx:5
         ports:
         - containerPort: 80
+      - name: nginx-exporter
+        image: nginx/nginx-prometheus-exporter:0.11.0
+        args:
+          - -nginx.scrape-uri=http://127.0.0.1:80/stub_status
+        ports:
+        - containerPort: 9113
+          name: metrics
       imagePullSecrets:
       - name: docker-config-secret
 ---
@@ -32,7 +39,7 @@ metadata:
   annotations:
     prometheus.io/scrape: 'true'
     prometheus.io/path: '/metrics'  # 필요에 따라 수정
-    prometheus.io/port: '80'    # 서비스의 메트릭 포트 번호
+    prometheus.io/port: '9113'    # 서비스의 메트릭 포트 번호
 spec:
   selector:
     app: nginx
@@ -40,6 +47,9 @@ spec:
   ports:
     - port: 80
       name: http-nginx
+    - port: 9113
+      targetPort: 9113
+      name: metrics
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
