@@ -71,6 +71,14 @@ spec:
   http:
   - match:
     - uri:
+        prefix: /metrics   # /metrics 경로를 추가하여 메트릭 요청을 처리
+    route:
+    - destination:
+        host: nginx-service
+        port:
+          number: 15090
+  - match:
+    - uri:
         prefix: /
     route:
     - destination:
