@@ -30,7 +30,9 @@ kind: Service
 metadata:
   name: nginx-service
   annotations:
-    prometheus.io/scrape: "true"
+    prometheus.io/scrape: 'true'
+    prometheus.io/path: '/metrics'  # 필요에 따라 수정
+    prometheus.io/port: '80'    # 서비스의 메트릭 포트 번호
 spec:
   selector:
     app: nginx
@@ -69,14 +71,6 @@ spec:
   hosts:
   - www.k-tech.cloud
   http:
-  - match:
-    - uri:
-        prefix: /metrics   # /metrics 경로를 추가하여 메트릭 요청을 처리
-    route:
-    - destination:
-        host: nginx-service
-        port:
-          number: 80
   - match:
     - uri:
         prefix: /
