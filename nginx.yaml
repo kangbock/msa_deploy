@@ -76,7 +76,7 @@ spec:
     - destination:
         host: nginx-service
         port:
-          number: 15090
+          number: 80
   - match:
     - uri:
         prefix: /
