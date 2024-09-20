@@ -22,6 +22,7 @@ spec:
         image: harbor.k-tech.cloud/msa/login_js:4
         ports:
         - containerPort: 3000
+        - containerPort: 9113
       imagePullSecrets:
       - name: docker-config-secret
 ---
@@ -33,6 +34,7 @@ metadata:
     prometheus.io/scrape: 'true'
     prometheus.io/path: '/metrics'  # 필요에 따라 수정
     prometheus.io/port: '9113'    # 서비스의 메트릭 포트 번호
+    sidecar.istio.io/rewriteAppHTTPProbers: "true"
 spec:
   selector:
     app: login-js
