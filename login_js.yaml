@@ -12,6 +12,7 @@ spec:
     metadata:
       annotations:
         prometheus.io/scrape: 'true'
+        sidecar.istio.io/rewriteAppHTTPProbers: "true"
       labels: # labels to select/identify the deployment
         app: login-js
         sidecar.istio.io/inject: "true"
@@ -34,7 +35,6 @@ metadata:
     prometheus.io/scrape: 'true'
     prometheus.io/path: '/metrics'  # 필요에 따라 수정
     prometheus.io/port: '9113'    # 서비스의 메트릭 포트 번호
-    sidecar.istio.io/rewriteAppHTTPProbers: "true"
 spec:
   selector:
     app: login-js
