@@ -14,7 +14,7 @@ spec:
         prometheus.io/scrape: 'true'
         sidecar.istio.io/rewriteAppHTTPProbers: "true"
       labels: # labels to select/identify the deployment
-        app: login-jsa
+        app: login-js
         sidecar.istio.io/inject: "true"
         version: v1.76.0
     spec:     # pod spec
