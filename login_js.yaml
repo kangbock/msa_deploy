@@ -35,7 +35,7 @@ metadata:
     prometheus.io/scrape: 'true'
     prometheus.io/path: '/metrics'  # 필요에 따라 수정
     prometheus.io/port: '9113'      # 서비스의 메트릭 포트 번호
-    prometheus.io/probe: 'true'     # 서비스 스크랩 Annotations
+    # prometheus.io/probe: 'true'     # 서비스 스크랩 Annotations
 spec:
   selector:
     app: login-js
