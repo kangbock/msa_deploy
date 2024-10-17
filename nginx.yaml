@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: harbor.k-tech.cloud/msa/nginx:2
+        image: harbor.k-tech.cloud/msa/nginx:1
         ports:
         - containerPort: 80
       - name: nginx-exporter
