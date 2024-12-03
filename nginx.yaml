@@ -74,8 +74,8 @@ spec:
       protocol: HTTP
     hosts:
     - www.k-tech.cloud
-    tls:
-      httpsRedirect: true
+    # tls:
+    #   httpsRedirect: true
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
