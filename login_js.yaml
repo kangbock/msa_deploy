@@ -13,6 +13,7 @@ spec:
       annotations:
         prometheus.io/scrape: 'true'
         sidecar.istio.io/rewriteAppHTTPProbers: "true"
+        sidecar.istio.io/inject: "true"
       labels: # labels to select/identify the deployment
         app: login-js
         sidecar.istio.io/inject: "true"
