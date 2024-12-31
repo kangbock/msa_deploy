@@ -10,6 +10,10 @@ spec:
       app: nginx
   template:
     metadata:
+      annotations:
+        prometheus.io/scrape: 'true'
+        sidecar.istio.io/rewriteAppHTTPProbers: "true"
+        sidecar.istio.io/inject: "true"
       labels:
         app: nginx
         sidecar.istio.io/inject: "true"
