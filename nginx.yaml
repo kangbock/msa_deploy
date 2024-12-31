@@ -17,7 +17,6 @@ spec:
       labels:
         app: nginx
         sidecar.istio.io/inject: "true"
-        sidecar.istio.io/inject: "true"
         version: v1.76.0
     spec:
       containers:
