@@ -1,0 +1,20 @@
+# nginx-certificate.yaml
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: nginx-secret
+  namespace: istio-system # isito-gateway namespace
+spec:
+  secretName: nginx-secret
+  privateKey:
+    rotationPolicy: Always
+  commonName: www.k-tech.cloud
+  dnsNames:
+    - www.k-tech.cloud
+  usages:
+    - digital signature
+    - key encipherment
+    - server auth
+  issuerRef:
+    name: letsencrypt2
+    kind: ClusterIssuer
