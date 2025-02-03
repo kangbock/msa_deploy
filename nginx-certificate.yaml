@@ -3,7 +3,7 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: nginx-secret
-  # namespace: istio-system # isito-gateway namespace
+  namespace: istio-system # isito-gateway namespace
 spec:
   secretName: nginx-secret
   privateKey:
