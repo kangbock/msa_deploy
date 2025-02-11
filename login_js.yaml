@@ -21,7 +21,7 @@ spec:
     spec:     # pod spec
       containers:
       - name: login-js
-        image: harbor.k-tech.cloud/msa/login_js:1
+        image: harbor.k-tech.cloud/msa/login_js:2
         ports:
         - containerPort: 3000
           name: tcp-loginjs
