@@ -11,26 +11,15 @@ spec:
   template:
     metadata:
       annotations:
-        prometheus.io/scrape: 'true'
-        sidecar.istio.io/rewriteAppHTTPProbers: "true"
-        sidecar.istio.io/inject: "true"
       labels:
         app: nginx
         sidecar.istio.io/inject: "true"
-        version: v1.76.0
     spec:
       containers:
       - name: nginx
-        image: harbor.k-tech.cloud/msa/nginx:1
+        image: harbor.k-tech.cloud/msa/nginx:2
         ports:
         - containerPort: 80
-      - name: nginx-exporter
-        image: nginx/nginx-prometheus-exporter:0.11.0
-        args:
-          - -nginx.scrape-uri=http://127.0.0.1:80/stub_status
-        ports:
-        - containerPort: 9113
-          name: http-metrics
       imagePullSecrets:
       - name: docker-config-secret
 ---
@@ -38,10 +27,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: nginx-service
-  annotations:
-    prometheus.io/scrape: 'true'
-    prometheus.io/path: '/metrics'  # 필요에 따라 수정
-    prometheus.io/port: '9113'    # 서비스의 메트릭 포트 번호
 spec:
   selector:
     app: nginx
@@ -49,9 +34,6 @@ spec:
   ports:
     - port: 80
       name: http-nginx
-    - port: 9113
-      targetPort: 9113
-      name: http-metrics
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
@@ -64,6 +46,12 @@ spec:
     istio: ingressgateway
   servers:
   - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - www.k-tech.cloud
+  - port:
       number: 443
       name: https
       protocol: HTTPS
@@ -72,14 +60,6 @@ spec:
     tls:
       mode: SIMPLE
       credentialName: nginx-secret
-  - port:
-      number: 80
-      name: http
-      protocol: HTTP
-    hosts:
-    - www.k-tech.cloud
-    tls:
-      httpsRedirect: true
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
@@ -99,22 +79,3 @@ spec:
         host: nginx-service
         port:
           number: 80
----
-apiVersion: autoscaling/v2
-kind: HorizontalPodAutoscaler
-metadata:
-  name: nginx
-spec:
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: nginx
-  minReplicas: 1
-  maxReplicas: 3
-  metrics:
-    - type: Resource
-      resource:
-        name: cpu
-        target:
-          type: Utilization
-          averageUtilization: 80
