@@ -24,7 +24,7 @@ spec:
         image: harbor.k-tech.cloud/msa/login_js:6
         ports:
         - containerPort: 3000
-          name: http-loginjs
+          name: tcp-loginjs
         - containerPort: 9113
           name: http-metrics
       imagePullSecrets:
@@ -45,7 +45,7 @@ spec:
     sidecar.istio.io/inject: "true"
   ports:
     - port: 3000
-      name: http-loginjs
+      name: tcp-loginjs
     - port: 9113
       targetPort: 9113
       name: http-metrics
