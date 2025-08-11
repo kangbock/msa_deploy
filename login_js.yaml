@@ -51,7 +51,7 @@ spec:
     app: login-js
   ports:
     - port: 3000
-      name: tcp-loginjs
+      name: http-loginjs
     - port: 9113
       targetPort: 9113
       name: http-metrics
