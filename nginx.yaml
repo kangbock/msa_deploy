@@ -30,7 +30,6 @@ metadata:
 spec:
   selector:
     app: nginx
-    sidecar.istio.io/inject: "true"
   ports:
     - port: 80
       name: http-nginx
