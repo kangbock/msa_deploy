@@ -69,24 +69,15 @@ spec:
       mode: SIMPLE
       credentialName: nginx-secret
 ---
-apiVersion: networking.istio.io/v1beta1
-kind: DestinationRule
-metadata:
-  name: nginx
-spec:
-  host: nginx-service
-  subsets:
-  - name: v1
-    labels:
-      version: v1
----
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
   name: nginx-virtualservice
 spec:
-  gateways: [nginx-gateway]
-  hosts: ["www.k-tech.cloud"]
+  gateways:
+  - nginx-gateway
+  hosts:
+  - www.k-tech.cloud
   http:
   - match:
     - uri:
@@ -94,6 +85,5 @@ spec:
     route:
     - destination:
         host: nginx-service
-        subset: v1
         port:
           number: 80
