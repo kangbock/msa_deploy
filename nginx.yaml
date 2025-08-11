@@ -2,8 +2,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx
+  labels:
+    app.kubernetes.io/name: nginx
+    app.kubernetes.io/version: v1.76.0
 spec:
-#  replicas: 1
   revisionHistoryLimit: 0
   selector:
     matchLabels:
@@ -11,9 +13,15 @@ spec:
   template:
     metadata:
       annotations:
+        sidecar.istio.io/inject: "true"   # ← 주입은 애노테이션로
       labels:
-        app: nginx
-        sidecar.istio.io/inject: "true"
+        app: nginx                        # ← 서비스 셀렉터 기준
+        version: v1.76.0                  # ← Kiali 버전 구분
+        app.kubernetes.io/name: nginx
+        app.kubernetes.io/version: v1.76.0
+        # (선택) Istio canonical 라벨도 같이 쓰면 더 깔끔
+        service.istio.io/canonical-name: nginx
+        service.istio.io/canonical-revision: v1.76.0
     spec:
       containers:
       - name: nginx
@@ -29,11 +37,11 @@ metadata:
   name: nginx-service
 spec:
   selector:
-    app: nginx
-    sidecar.istio.io/inject: "true"
+    app: nginx                 # ← 버전/주입 라벨은 넣지 말 것
   ports:
-    - port: 80
-      name: http-nginx
+  - port: 80
+    targetPort: 80
+    name: http-nginx          # ← http- 접두사 OK (L7 인식) :contentReference[oaicite:4]{index=4}
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
@@ -61,15 +69,24 @@ spec:
       mode: SIMPLE
       credentialName: nginx-secret
 ---
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: nginx
+spec:
+  host: nginx-service
+  subsets:
+  - name: v1
+    labels:
+      version: v1
+---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
   name: nginx-virtualservice
 spec:
-  gateways:
-  - nginx-gateway
-  hosts:
-  - www.k-tech.cloud
+  gateways: [nginx-gateway]
+  hosts: ["www.k-tech.cloud"]
   http:
   - match:
     - uri:
@@ -77,5 +94,6 @@ spec:
     route:
     - destination:
         host: nginx-service
+        subset: v1
         port:
           number: 80
