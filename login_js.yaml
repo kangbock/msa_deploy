@@ -2,8 +2,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: login-js
+  labels:
+    app.kubernetes.io/name: login-js
+    app.kubernetes.io/version: v1.76.0
 spec:
-#  replicas: 1
   revisionHistoryLimit: 0
   selector:
     matchLabels:
@@ -11,41 +13,45 @@ spec:
   template:
     metadata:
       annotations:
-        prometheus.io/scrape: 'true'
+        prometheus.io/scrape: "true"
         sidecar.istio.io/rewriteAppHTTPProbers: "true"
         sidecar.istio.io/inject: "true"
-      labels: # labels to select/identify the deployment
+      labels:
+        # Kiali/Istio가 인식하는 표준 라벨 세트 (한 벌로 충분)
         app: login-js
-        sidecar.istio.io/inject: "true"
         version: v1.76.0
-    spec:     # pod spec
+        app.kubernetes.io/name: login-js
+        app.kubernetes.io/version: v1.76.0
+        # (선택) canonical 라벨도 병행 사용 가능
+        service.istio.io/canonical-name: login-js
+        service.istio.io/canonical-revision: v1.76.0
+    spec:
       containers:
-      - name: login-js
-        image: harbor.k-tech.cloud/msa/login_js:6
-        ports:
-        - containerPort: 3000
-          name: tcp-loginjs
-        - containerPort: 9113
-          name: http-metrics
+        - name: login-js
+          image: harbor.k-tech.cloud/msa/login_js:6
+          ports:
+            - containerPort: 3000
+              name: http-loginjs      # ← http- 접두사로 L7 인식
+            - containerPort: 9113
+              name: http-metrics
       imagePullSecrets:
-      - name: docker-config-secret
+        - name: docker-config-secret
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: login-js-service
   annotations:
-    prometheus.io/scrape: 'true'
-    prometheus.io/path: '/metrics'  # 필요에 따라 수정
-    prometheus.io/port: '9113'      # 서비스의 메트릭 포트 번호
-    # prometheus.io/probe: 'true'     # 서비스 스크랩 Annotations
+    prometheus.io/scrape: "true"
+    prometheus.io/path: "/metrics"
+    prometheus.io/port: "9113"
 spec:
   selector:
-    app: login-js
-    sidecar.istio.io/inject: "true"
+    app: login-js          # ← 최소 셀렉터(app만). 주입/버전은 빼기
   ports:
-    - port: 3000
-      name: tcp-loginjs
-    - port: 9113
-      targetPort: 9113
-      name: http-metrics
+    - name: http-loginjs   # ← 서비스 포트도 http- 접두사
+      port: 3000
+      targetPort: http-loginjs
+    - name: http-metrics
+      port: 9113
+      targetPort: http-metrics
