@@ -4,7 +4,7 @@ metadata:
   name: nginx
   labels:
     app.kubernetes.io/name: nginx
-    app.kubernetes.io/version: v1.76.0
+    app.kubernetes.io/version: v1
 spec:
   revisionHistoryLimit: 0
   selector:
@@ -16,12 +16,12 @@ spec:
         sidecar.istio.io/inject: "true"   # ← 주입은 애노테이션로
       labels:
         app: nginx                        # ← 서비스 셀렉터 기준
-        version: v1.76.0                  # ← Kiali 버전 구분
+        version: v1                       # ← Kiali 버전 구분
         app.kubernetes.io/name: nginx
-        app.kubernetes.io/version: v1.76.0
+        app.kubernetes.io/version: v1
         # (선택) Istio canonical 라벨도 같이 쓰면 더 깔끔
         service.istio.io/canonical-name: nginx
-        service.istio.io/canonical-revision: v1.76.0
+        service.istio.io/canonical-revision: v1
     spec:
       containers:
       - name: nginx
