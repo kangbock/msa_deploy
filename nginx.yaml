@@ -13,7 +13,9 @@ spec:
   template:
     metadata:
       annotations:
-        sidecar.istio.io/inject: "true"   # ← 주입은 애노테이션로
+        prometheus.io/scrape: "true"
+        sidecar.istio.io/rewriteAppHTTPProbers: "true"
+        sidecar.istio.io/inject: "true"
       labels:
         app: nginx                        # ← 서비스 셀렉터 기준
         version: v1                       # ← Kiali 버전 구분
@@ -59,6 +61,8 @@ spec:
       protocol: HTTP
     hosts:
     - www.k-tech.cloud
+    tls:
+      httpsRedirect: true        # 80 → 443 리다이렉트
   - port:
       number: 443
       name: https
