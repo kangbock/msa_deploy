@@ -2,10 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx
-  labels:
-    app.kubernetes.io/name: nginx
-    app.kubernetes.io/version: v1
 spec:
+#  replicas: 1
   revisionHistoryLimit: 0
   selector:
     matchLabels:
@@ -13,17 +11,9 @@ spec:
   template:
     metadata:
       annotations:
-        prometheus.io/scrape: "true"
-        sidecar.istio.io/rewriteAppHTTPProbers: "true"
-        sidecar.istio.io/inject: "true"
       labels:
-        app: nginx                        # ← 서비스 셀렉터 기준
-        version: v1                       # ← Kiali 버전 구분
-        app.kubernetes.io/name: nginx
-        app.kubernetes.io/version: v1
-        # (선택) Istio canonical 라벨도 같이 쓰면 더 깔끔
-        service.istio.io/canonical-name: nginx
-        service.istio.io/canonical-revision: v1
+        app: nginx
+        sidecar.istio.io/inject: "true"
     spec:
       containers:
       - name: nginx
@@ -39,11 +29,11 @@ metadata:
   name: nginx-service
 spec:
   selector:
-    app: nginx                 # ← 버전/주입 라벨은 넣지 말 것
+    app: nginx
+    sidecar.istio.io/inject: "true"
   ports:
-  - port: 80
-    targetPort: 80
-    name: http-nginx          # ← http- 접두사 OK (L7 인식) :contentReference[oaicite:4]{index=4}
+    - port: 80
+      name: http-nginx
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
@@ -61,8 +51,6 @@ spec:
       protocol: HTTP
     hosts:
     - www.k-tech.cloud
-    tls:
-      httpsRedirect: true        # 80 → 443 리다이렉트
   - port:
       number: 443
       name: https
