@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
         - name: login-js
-          image: harbor.k-tech.cloud/msa/login_js:8
+          image: harbor.k-tech.cloud/msa/login_js:2
           ports:
             - containerPort: 3000
               name: http-loginjs      # ← http- 접두사로 L7 인식
