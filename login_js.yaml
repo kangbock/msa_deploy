@@ -5,6 +5,7 @@ metadata:
   labels:
     app.kubernetes.io/name: login-js
     app.kubernetes.io/version: v1.76.0
+    backstage.io/kubernetes-id: login-js
 spec:
   revisionHistoryLimit: 0
   selector:
@@ -24,6 +25,7 @@ spec:
         # (선택) canonical 라벨도 병행 사용 가능
         service.istio.io/canonical-name: login-js
         service.istio.io/canonical-revision: v1.76.0
+        backstage.io/kubernetes-id: login-js
     spec:
       containers:
         - name: login-js
@@ -40,6 +42,9 @@ apiVersion: v1
 kind: Service
 metadata:
   name: login-js-service
+  labels:
+    app: login-js
+    backstage.io/kubernetes-id: login-js
 spec:
   selector:
     app: login-js

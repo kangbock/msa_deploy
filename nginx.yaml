@@ -5,6 +5,7 @@ metadata:
   labels:
     app.kubernetes.io/name: nginx
     app.kubernetes.io/version: v1
+    backstage.io/kubernetes-id: nginx     # ← Backstage용 매핑 라벨
 spec:
   revisionHistoryLimit: 0
   selector:
@@ -22,6 +23,7 @@ spec:
         # (선택) Istio canonical 라벨도 같이 쓰면 더 깔끔
         service.istio.io/canonical-name: nginx
         service.istio.io/canonical-revision: v1
+        backstage.io/kubernetes-id: nginx
     spec:
       containers:
       - name: nginx
@@ -35,6 +37,9 @@ apiVersion: v1
 kind: Service
 metadata:
   name: nginx-service
+  labels:
+    app: nginx
+    backstage.io/kubernetes-id: nginx
 spec:
   selector:
     app: nginx
